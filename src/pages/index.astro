@@ -1,0 +1,71 @@
+---
+import BaseHead from "../components/BaseHead.astro";
+import Header from "../components/Header.astro";
+import BlogPostPreview from "../components/BlogPostPreview.astro";
+
+let title = "fri3d.gg";
+let description = "fri3d.gg - If it is fried, it must be tried.";
+
+// Use Astro.glob to fetch all post with associated frontmatter
+const unsortedPosts = await Astro.glob("./blog/posts/*.md");
+const posts = unsortedPosts.sort(function (a, b) {
+	return (
+		new Date(b.frontmatter.publishDate).valueOf() - new Date(a.frontmatter.publishDate).valueOf()
+	);
+});
+---
+
+<html lang="en">
+
+<head>
+	<BaseHead title={title} description={description} />
+</head>
+
+<body>
+	<aside>
+		<Header />
+		<div class="img-wrapper">
+			<img src="assets/images/fri3dvatar.png" alt="">
+		</div>
+	</aside>
+	<div class="wrapper">
+		<main class="content">
+			<section aria-label="Blog post list">
+				{posts.map(({ url, frontmatter }) => (
+				<BlogPostPreview title={frontmatter.title} description={frontmatter.description}
+					publishDate={frontmatter.publishDate} url={url} />
+				))}
+			</section>
+		</main>
+	</div>
+</body>
+
+</html>
+
+<style>
+	.content {
+		margin-top: 4rem;
+		margin-bottom: 8rem;
+	}
+
+	.intro {
+		padding-bottom: 4rem;
+		margin-bottom: 2rem;
+		border-bottom: 4px solid var(--theme-divider);
+	}
+
+	h1 {
+		font-size: 2.5rem;
+		font-weight: 700;
+	}
+
+	aside {}
+
+	.img-wrapper {
+		width: 250px;
+	}
+
+	img {
+		width: 100%;
+	}
+</style>
