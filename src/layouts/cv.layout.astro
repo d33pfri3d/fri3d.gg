@@ -1,0 +1,35 @@
+---
+import BaseHead from "../components/BaseHead.astro";
+
+export interface Props {
+	content: {
+		title: string;
+		description: string;
+		publishDate: string;
+    github: string;
+	};
+}
+
+const {
+	content: { title, description, publishDate, github },
+} = Astro.props as Props;
+
+
+---
+
+<html>
+	<head>
+		<BaseHead title={title} description={description} />
+	</head>
+
+	<body>
+		<article class="wrapper content">
+			<header>
+        <a href={github}><img src="assets/images/github.icon.svg" height="50" /></a>
+			</header>
+			<main>
+				<slot></slot>
+			</main>
+		</article>
+	</body>
+</html>

@@ -1,0 +1,44 @@
+---
+layout: "../../layouts/cv.layout.astro"
+title: "Shaun D | Codewriter"
+ 
+import BaseHead from "../../components/BaseHead.astro";
+import Header from "../../components/Header.astro";
+
+let title = "fri3d.gg";
+let description = "fri3d.gg - If it is fried, it must be tried.";
+
+const github = "https://github.com/d33pfri3d"
+
+const positions = await Astro.glob("./positions/*.md");
+
+const sortedPositions = positions.sort(function (a, b) {
+	return (
+		new Date(b.frontmatter.endDate).valueOf() - new Date(a.frontmatter.endDate).valueOf()
+	);
+});
+
+---
+
+<html>
+	<head>
+		<BaseHead title={title} description={description} />
+	</head>
+
+	<body>
+		<article class="wrapper content">
+			<header>
+        <a href={github}><img src="assets/images/github.icon.svg" height="50" /></a>
+			</header>
+			<main>
+        <p class="font-mono">Full-Stack developer with a decade of experience in building applications for the web.</p>
+        <p>I have worked with a wide range of 'Stacks' in that time, From full stack JavaScript/Typescript, to Ruby on Rails and React Native.</p>
+			</main>
+      <section aria-label="roles list">
+				{sortedPositions.map(({ url, frontmatter }) => (
+				<div>{frontmatter.company}</div>
+				))}
+			</section>
+		</article>
+	</body>
+</html>

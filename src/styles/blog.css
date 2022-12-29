@@ -93,6 +93,8 @@ body {
 	line-height: 1.625;
 	border: 5px solid black;
 	border-radius: 255px 15px 255px 15px / 15px 255px 15px 255px;
+	min-height: 90vh;
+	margin:1rem;
 }
 
 .wrapper {
