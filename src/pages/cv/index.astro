@@ -1,3 +1,40 @@
 ---
+import BaseHead from '../../components/BaseHead.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
 
+import * as intro from '../../content/cv/intro.mdx';
+interface Frontmatter {
+    company: string;
+    tech: string[];
+}
+const roles = await Astro.glob<Frontmatter>('../../content/cv/positions/*.mdx');
 ---
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+	</head>
+	<body>
+		<Header title={SITE_TITLE} />
+		<main class="p-8">
+            <section class="border-b-2 text-xs">
+                <intro.Content />
+            </section>
+
+            <section>
+                {roles.map((role) => (
+                    <div class="border-b-2">
+                        <h3 class="font-virgil">
+                            {role.frontmatter.company}  
+                        </h3>
+                        <role.Content />
+                    </div>
+                ))}
+            </section>
+		</main>
+		<Footer />
+	</body>
+</html>

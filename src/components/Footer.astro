@@ -1,9 +1,17 @@
 ---
-const today = new Date();
+const footers = [
+	"Making the internet wierd again",
+	"Established in the 80s",
+	"These are random",
+	"ChatGPT wrote this one",
+	"I like to choke a man with his own Gi"
+];
+
+const footer = footers[Math.floor(Math.random() * footers.length)];
 ---
 
 <footer>
-	&copy; {today.getFullYear()} YOUR NAME HERE. All rights reserved.
+	<p>{footer}</p>
 </footer>
 <style>
 	footer {
