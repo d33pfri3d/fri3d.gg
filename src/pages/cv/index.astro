@@ -3,13 +3,22 @@ import BaseHead from '../../components/BaseHead.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
+import RoleTags from '../../components/tags.astro';
 
 import * as intro from '../../content/cv/intro.mdx';
 interface Frontmatter {
     company: string;
+    role: string;
     tech: string[];
+    jobtype: string;
+    startDate: string;
+    endDate: string;
+    order: number;
 }
 const roles = await Astro.glob<Frontmatter>('../../content/cv/positions/*.mdx');
+const reverseOrderRoles = roles.sort((a, b) => b.frontmatter.order - a.frontmatter.order);
+const emailAddress = import.meta.env.EMAIL_ADDRESS;
+const tel = import.meta.env.TEL_NUMBER;
 ---
 
 <!DOCTYPE html>
@@ -19,17 +28,34 @@ const roles = await Astro.glob<Frontmatter>('../../content/cv/positions/*.mdx');
 	</head>
 	<body>
 		<Header title={SITE_TITLE} />
-		<main class="p-8">
-            <section class="border-b-2 text-xs">
+		<main class="p-8 main-wrapper">
+            <section class="border-b-2">
+                <div class="mb-10">
+                    <p class="font-virgil mb-0 text-2xl">{intro.frontmatter.name}</p>
+                    <p class="font-virgil mb-0">{intro.frontmatter.title}</p>
+                    <p class="mb-0 text-sm">{emailAddress}</p>
+                    <p class="mb-0 text-sm">{tel}</p>
+                    <a href={'https://github.com/' + intro.frontmatter.github} >Github</a>
+                </div>
+                <div class="text-sm">
                 <intro.Content />
+                </div>
             </section>
 
             <section>
-                {roles.map((role) => (
+                {reverseOrderRoles.map((role) => (
                     <div class="border-b-2">
                         <h3 class="font-virgil">
-                            {role.frontmatter.company}  
+                            Company : {role.frontmatter.company}  
                         </h3>
+                        <p class="font-virgil">Role: { role.frontmatter.role }</p>
+                        <div class="font-virgil">
+                            Stack: 
+                            {role.frontmatter.tech && role.frontmatter.tech.length > 0 && <RoleTags tags={role.frontmatter.tech} />}
+                        </div>
+                        <div>
+                            {role.frontmatter.jobtype && <span class={role.frontmatter.jobtype}>{role.frontmatter.jobtype}</span>}
+                        </div>
                         <role.Content />
                     </div>
                 ))}

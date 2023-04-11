@@ -7,7 +7,7 @@ body {
   background-color: #faf9f6;
 }
 
-body {
+.main-wrapper {
   border: 5px solid #000;
   border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
 }
