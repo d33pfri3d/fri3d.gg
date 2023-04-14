@@ -1,66 +1,95 @@
 ---
-import BaseHead from '../../components/BaseHead.astro';
-import Header from '../../components/Header.astro';
-import Footer from '../../components/Footer.astro';
-import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
-import RoleTags from '../../components/tags.astro';
+import BaseHead from "../../components/BaseHead.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import { SITE_TITLE, SITE_DESCRIPTION } from "../../consts";
+import RoleTags from "../../components/tags.astro";
 
-import * as intro from '../../content/cv/intro.mdx';
+import * as intro from "../../content/cv/intro.mdx";
 interface Frontmatter {
-    company: string;
-    role: string;
-    tech: string[];
-    jobtype: string;
-    startDate: string;
-    endDate: string;
-    order: number;
+  company: string;
+  role: string;
+  tech: string[];
+  jobtype: string;
+  startDate: string;
+  endDate: string;
+  order: number;
 }
-const roles = await Astro.glob<Frontmatter>('../../content/cv/positions/*.mdx');
-const reverseOrderRoles = roles.sort((a, b) => b.frontmatter.order - a.frontmatter.order);
+const roles = await Astro.glob<Frontmatter>("../../content/cv/positions/*.mdx");
+const reverseOrderRoles = roles.sort(
+  (a, b) => b.frontmatter.order - a.frontmatter.order
+);
 const emailAddress = import.meta.env.EMAIL_ADDRESS;
 const tel = import.meta.env.TEL_NUMBER;
 ---
 
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-	</head>
-	<body>
-		<Header title={SITE_TITLE} />
-		<main class="p-8 main-wrapper">
-            <section class="border-b-2">
-                <div class="mb-10">
-                    <p class="font-virgil mb-0 text-2xl">{intro.frontmatter.name}</p>
-                    <p class="font-virgil mb-0">{intro.frontmatter.title}</p>
-                    <p class="mb-0 text-sm">{emailAddress}</p>
-                    <p class="mb-0 text-sm">{tel}</p>
-                    <a href={'https://github.com/' + intro.frontmatter.github} >Github</a>
-                </div>
-                <div class="text-sm">
-                <intro.Content />
-                </div>
-            </section>
+  <head>
+    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+  </head>
+  <body>
+    <Header title={SITE_TITLE} />
+    <main class="p-8 main-wrapper">
+      <section class="border-b-2">
+        <div class="mb-10">
+          <p class="font-virgil mb-0 text-2xl">{intro.frontmatter.name}</p>
+          <p class="font-virgil mb-0">{intro.frontmatter.title}</p>
+          <p class="mb-0 text-sm">{emailAddress}</p>
+          <p class="mb-0 text-sm">{tel}</p>
+          <a href={"https://github.com/" + intro.frontmatter.github}>Github</a>
+        </div>
+        <div class="text-sm">
+          <intro.Content />
+        </div>
+      </section>
 
-            <section>
-                {reverseOrderRoles.map((role) => (
-                    <div class="border-b-2">
-                        <h3 class="font-virgil">
-                            Company : {role.frontmatter.company}  
-                        </h3>
-                        <p class="font-virgil">Role: { role.frontmatter.role }</p>
-                        <div class="font-virgil">
-                            Stack: 
-                            {role.frontmatter.tech && role.frontmatter.tech.length > 0 && <RoleTags tags={role.frontmatter.tech} />}
-                        </div>
-                        <div>
-                            {role.frontmatter.jobtype && <span class={role.frontmatter.jobtype}>{role.frontmatter.jobtype}</span>}
-                        </div>
-                        <role.Content />
-                    </div>
-                ))}
-            </section>
-		</main>
-		<Footer />
-	</body>
+      <section>
+        {
+          reverseOrderRoles.map((role) => (
+            <div class="border-b-2">
+              <ul class="mb-5">
+                <li class="text-sm">
+                  <span>Company: </span>
+                  <span class="font-virgil text-lg">
+                    {role.frontmatter.company}
+                  </span>
+                </li>
+                <li class="text-sm">
+                  <span>Role: </span>{" "}
+                  <span class="font-virgil text-lg">
+                    {role.frontmatter.role}
+                  </span>
+                </li>
+                <li class="text-sm">
+                  <span>Type:</span>
+                  <span class="font-virgil text-lg">
+                    {role.frontmatter.jobtype && (
+                      <span class={role.frontmatter.jobtype}>
+                        {" "}
+                        {role.frontmatter.jobtype}{" "}
+                      </span>
+                    )}
+                  </span>
+                </li>
+                <li>
+                  <div class="flex flex-wrap">
+                    <span class="pr-2">Stack:</span>
+                    <span class="font-virgil text-lg pr-2">
+                      {role.frontmatter.tech &&
+                        role.frontmatter.tech.length > 0 && (
+                          <RoleTags tags={role.frontmatter.tech} />
+                        )}
+                    </span>
+                  </div>
+                </li>
+              </ul>
+              <role.Content />
+            </div>
+          ))
+        }
+      </section>
+    </main>
+    <Footer />
+  </body>
 </html>
