@@ -1,0 +1,19 @@
+---
+const { tags } = Astro.props;
+---
+
+{
+  tags.map((tag: string) => (
+    <div class="tag bg-white inline-block rounded-lg mr-3 mb-2 py-0.5 px-2">
+      {tag}
+    </div>
+  ))
+}
+
+<style>
+  .tag {
+    border: 2px solid #000;
+    border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+    box-shadow: #000 2px 4px 0 1px;
+  }
+</style>
