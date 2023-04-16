@@ -4,6 +4,7 @@ import Header from "../../components/Header.astro";
 import Footer from "../../components/Footer.astro";
 import { SITE_TITLE, SITE_DESCRIPTION } from "../../consts";
 import RoleTags from "../../components/tags.astro";
+import Stamp from "../../components/Stamp.astro";
 
 import * as intro from "../../content/cv/intro.mdx";
 interface Frontmatter {
@@ -14,6 +15,8 @@ interface Frontmatter {
   startDate: string;
   endDate: string;
   order: number;
+  dates: string;
+  link: string;
 }
 const roles = await Astro.glob<Frontmatter>("../../content/cv/positions/*.mdx");
 const reverseOrderRoles = roles.sort(
@@ -47,7 +50,10 @@ const tel = import.meta.env.TEL_NUMBER;
       <section>
         {
           reverseOrderRoles.map((role) => (
-            <div class="border-b-2">
+            <div class="border-b-2 border-dashed border-black role py-5">
+              {role.frontmatter.dates && (
+                <Stamp dates={role.frontmatter.dates} />
+              )}
               <ul class="mb-5">
                 <li class="text-sm">
                   <span>Company: </span>
@@ -72,10 +78,25 @@ const tel = import.meta.env.TEL_NUMBER;
                     )}
                   </span>
                 </li>
-                <li>
+                {role.frontmatter.link && (
+                  <li class="text-sm">
+                    <span>Link:</span>
+                    <span class="font-virgil text-lg">
+                      <a
+                        href={role.frontmatter.link}
+                        target="_blank"
+                        rel="noreferrer"
+                        class="underline"
+                      >
+                        {role.frontmatter.link}
+                      </a>
+                    </span>
+                  </li>
+                )}
+                <li class="text-sm">
                   <div class="flex flex-wrap">
                     <span class="pr-2">Stack:</span>
-                    <span class="font-virgil text-lg pr-2">
+                    <span class="font-virgil text-sm pr-2">
                       {role.frontmatter.tech &&
                         role.frontmatter.tech.length > 0 && (
                           <RoleTags tags={role.frontmatter.tech} />

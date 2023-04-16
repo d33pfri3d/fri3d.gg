@@ -2,6 +2,7 @@
 title: "I became a React Native developer by accident, now I might try Tauri"
 description: "Lorem ipsum dolor sit amet"
 draft: true
+pubDate: "13 Apr 2023"
 ---
 
 In 2015 I was knee deep in Ember. Boy, did I love that god-damn framework so hard. So hard in fact, I can't even remember why. Maybe it was because I was a big Yehuda fan as
