@@ -2,7 +2,7 @@
 const { dates } = Astro.props;
 ---
 
-<div class="stamp">{dates}</div>
+<div class="stamp hidden sm:inline-block">{dates}</div>
 
 <style>
   .stamp {
@@ -11,7 +11,6 @@ const { dates } = Astro.props;
     font-size: 1.2rem;
     font-weight: 700;
     border: 0.25rem solid #555;
-    display: inline-block;
     padding: 0.25rem 1rem;
     text-transform: uppercase;
     border-radius: 1rem;
@@ -20,6 +19,6 @@ const { dates } = Astro.props;
     -webkit-mask-size: 944px 604px;
     mix-blend-mode: multiply;
     position: absolute;
-    right: 60px;
+    right: 0px;
   }
 </style>

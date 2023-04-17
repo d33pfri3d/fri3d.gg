@@ -33,16 +33,23 @@ const tel = import.meta.env.TEL_NUMBER;
   </head>
   <body>
     <Header title={SITE_TITLE} />
-    <main class="p-8 main-wrapper">
+    <main class="p-3 m-2 md:p-8 main-wrapper container">
       <section class="border-b-2">
         <div class="mb-10">
           <p class="font-virgil mb-0 text-2xl">{intro.frontmatter.name}</p>
           <p class="font-virgil mb-0">{intro.frontmatter.title}</p>
           <p class="mb-0 text-sm">{emailAddress}</p>
           <p class="mb-0 text-sm">{tel}</p>
-          <a href={"https://github.com/" + intro.frontmatter.github}>Github</a>
+          <a
+            class="mb-0 text-sm"
+            href={"https://github.com/" + intro.frontmatter.github}
+            >{"https://github.com/" + intro.frontmatter.github}</a
+          >
+          <a class="mb-0 text-sm" href={intro.frontmatter.linkedin}
+            >{intro.frontmatter.linkedin}</a
+          >
         </div>
-        <div class="text-sm">
+        <div class="text-xs md:text-sm">
           <intro.Content />
         </div>
       </section>
@@ -50,7 +57,7 @@ const tel = import.meta.env.TEL_NUMBER;
       <section>
         {
           reverseOrderRoles.map((role) => (
-            <div class="border-b-2 border-dashed border-black role py-5">
+            <div class="border-b-2 border-dashed border-black role py-5 relative">
               {role.frontmatter.dates && (
                 <Stamp dates={role.frontmatter.dates} />
               )}
@@ -79,7 +86,7 @@ const tel = import.meta.env.TEL_NUMBER;
                   </span>
                 </li>
                 {role.frontmatter.link && (
-                  <li class="text-sm">
+                  <li class="text-sm truncate">
                     <span>Link:</span>
                     <span class="font-virgil text-lg">
                       <a
@@ -105,12 +112,20 @@ const tel = import.meta.env.TEL_NUMBER;
                   </div>
                 </li>
               </ul>
-              <role.Content />
+              <div class="text-xs">
+                <role.Content />
+              </div>
             </div>
           ))
         }
       </section>
     </main>
     <Footer />
+    <style>
+      @page {
+        size: A4;
+        margin: 0;
+      }
+    </style>
   </body>
 </html>
