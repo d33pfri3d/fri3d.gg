@@ -1,21 +1,22 @@
 ---
 const footers = [
-	"Making the internet wierd again",
-	"Established in the 80s",
-	"These are random",
-	"ChatGPT wrote this one",
-	"I like to choke a man with his own Gi"
+  "Making the internet weird again",
+  "Established in the 80s",
+  "These are random",
+  "ChatGPT wrote this one",
+  "I like to choke a man with his own Gi",
+  "Chandler Bing is Dead.",
 ];
 
 const footer = footers[Math.floor(Math.random() * footers.length)];
 ---
 
-<footer>
-	<p>{footer}</p>
+<footer class="no-print">
+  <p>{footer}</p>
 </footer>
 <style>
-	footer {
-		padding: 25px;
-		text-align: center;
-	}
+  footer {
+    padding: 25px;
+    text-align: center;
+  }
 </style>

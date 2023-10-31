@@ -3,13 +3,12 @@ import HeaderLink from "./HeaderLink.astro";
 import { SITE_TITLE } from "../consts";
 ---
 
-<header class="no-print">
+<header class="no-print container">
   <nav>
     <HeaderLink href="/blog">Blog</HeaderLink>
     <HeaderLink href="/fri3dprojects">
       <span class="font-virgil">Fri3d</span><sub>(Projects)</sub>
     </HeaderLink>
-    <HeaderLink href="/cv" class="font-virgil">cv</HeaderLink>
   </nav>
 </header>
 <style>

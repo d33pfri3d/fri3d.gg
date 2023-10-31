@@ -31,9 +31,8 @@ const tel = import.meta.env.TEL_NUMBER;
   <head>
     <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
   </head>
-  <body>
-    <Header title={SITE_TITLE} />
-    <main class="p-3 m-2 md:p-8 main-wrapper container">
+  <body class="flex flex-col">
+    <main class="p-3 m-2 md:p-8 main-wrapper xl:container self-center">
       <section class="border-b-2">
         <div class="mb-10">
           <p class="font-virgil mb-0 text-2xl">{intro.frontmatter.name}</p>
@@ -41,15 +40,16 @@ const tel = import.meta.env.TEL_NUMBER;
           <p class="mb-0 text-sm">{emailAddress}</p>
           <p class="mb-0 text-sm">{tel}</p>
           <a
-            class="mb-0 text-sm"
+            class="mb-0 text-sm block underline"
             href={"https://github.com/" + intro.frontmatter.github}
             >{"https://github.com/" + intro.frontmatter.github}</a
           >
-          <a class="mb-0 text-sm" href={intro.frontmatter.linkedin}
-            >{intro.frontmatter.linkedin}</a
+          <a
+            class="mb-0 text-sm block underline"
+            href={intro.frontmatter.linkedin}>{intro.frontmatter.linkedin}</a
           >
         </div>
-        <div class="text-xs md:text-sm">
+        <div class="text-xs md:text-sm print:text-xs">
           <intro.Content />
         </div>
       </section>
@@ -57,7 +57,11 @@ const tel = import.meta.env.TEL_NUMBER;
       <section>
         {
           reverseOrderRoles.map((role) => (
-            <div class="border-b-2 border-dashed border-black role py-5 relative">
+            <div
+              class={`border-b-2 border-dashed border-black role py-5 relative ${
+                role.frontmatter.order < 20 ? "no-print" : ""
+              }`}
+            >
               {role.frontmatter.dates && (
                 <Stamp dates={role.frontmatter.dates} />
               )}
@@ -101,7 +105,7 @@ const tel = import.meta.env.TEL_NUMBER;
                   </li>
                 )}
                 <li class="text-sm">
-                  <div class="flex flex-wrap">
+                  <div class="flex">
                     <span class="pr-2">Stack:</span>
                     <span class="font-virgil text-sm pr-2">
                       {role.frontmatter.tech &&
@@ -112,12 +116,17 @@ const tel = import.meta.env.TEL_NUMBER;
                   </div>
                 </li>
               </ul>
-              <div class="text-xs">
+              <div class="text-xs print:text-xs">
                 <role.Content />
               </div>
             </div>
           ))
         }
+        <h2 class="text-center mt-2 hidden print:block">
+          Full list of roles available : <a href="https://fri3d.gg/cv"
+            >fri3d.gg/cv</a
+          >
+        </h2>
       </section>
     </main>
     <Footer />
