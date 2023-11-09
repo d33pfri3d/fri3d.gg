@@ -1,10 +1,7 @@
 ---
 import BaseHead from "../../components/BaseHead.astro";
-import Header from "../../components/Header.astro";
 import Footer from "../../components/Footer.astro";
 import { SITE_TITLE, SITE_DESCRIPTION } from "../../consts";
-import RoleTags from "../../components/tags.astro";
-import Stamp from "../../components/Stamp.astro";
 
 import * as intro from "../../content/cv/intro.mdx";
 interface Frontmatter {
@@ -32,11 +29,11 @@ const tel = import.meta.env.TEL_NUMBER;
     <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
   </head>
   <body class="flex flex-col">
-    <main class="p-3 m-2 md:p-8 main-wrapper container self-center">
+    <main class="p-3 m-2 md:p-8 container self-center">
       <section class="border-b-2">
-        <div class="mb-10 flex flex-col">
-          <p class="font-virgil mb-0 text-2xl">{intro.frontmatter.name}</p>
-          <p class="font-virgil mb-0">{intro.frontmatter.title}</p>
+        <div class="mb-10">
+          <p class="mb-0 text-2xl">{intro.frontmatter.name}</p>
+          <p class="mb-0">{intro.frontmatter.title}</p>
           <p class="mb-0 text-sm">{emailAddress}</p>
           <p class="mb-0 text-sm">{tel}</p>
           <a
@@ -44,12 +41,9 @@ const tel = import.meta.env.TEL_NUMBER;
             href={"https://github.com/" + intro.frontmatter.github}
             >{"https://github.com/" + intro.frontmatter.github}</a
           >
-          <a class="text-sm block underline" href={intro.frontmatter.linkedin}
-            >{intro.frontmatter.linkedin}</a
-          >
           <a
-            href="./shaun_davis_nov23.pdf"
-            class="bg-green-200 rounded px-4 py-2 mt-4 w-max">DOWNLOAD NOW!</a
+            class="mb-0 text-sm block underline"
+            href={intro.frontmatter.linkedin}>{intro.frontmatter.linkedin}</a
           >
         </div>
         <div class="text-xs md:text-sm print:text-xs">
@@ -61,29 +55,22 @@ const tel = import.meta.env.TEL_NUMBER;
         {
           reverseOrderRoles.map((role) => (
             <div
-              class={`border-b-2 border-dashed border-black role py-5 relative ${
-                role.frontmatter.order < 20 ? "no-print" : ""
+              class={`grid grid-cols-2 border-b-2 border-dotted border-black role py-5 relative ${
+                role.frontmatter.order < 16 ? "no-print" : ""
               }`}
             >
-              {role.frontmatter.dates && (
-                <Stamp dates={role.frontmatter.dates} />
-              )}
               <ul class="mb-5">
                 <li class="text-sm">
                   <span>Company: </span>
-                  <span class="font-virgil text-lg">
-                    {role.frontmatter.company}
-                  </span>
+                  <span class="text-sm">{role.frontmatter.company}</span>
                 </li>
                 <li class="text-sm">
                   <span>Role: </span>{" "}
-                  <span class="font-virgil text-lg">
-                    {role.frontmatter.role}
-                  </span>
+                  <span class="text-sm">{role.frontmatter.role}</span>
                 </li>
                 <li class="text-sm">
                   <span>Type:</span>
-                  <span class="font-virgil text-lg">
+                  <span class="text-sm">
                     {role.frontmatter.jobtype && (
                       <span class={role.frontmatter.jobtype}>
                         {" "}
@@ -95,7 +82,7 @@ const tel = import.meta.env.TEL_NUMBER;
                 {role.frontmatter.link && (
                   <li class="text-sm truncate">
                     <span>Link:</span>
-                    <span class="font-virgil text-lg">
+                    <span class="text-sm">
                       <a
                         href={role.frontmatter.link}
                         target="_blank"
@@ -110,12 +97,19 @@ const tel = import.meta.env.TEL_NUMBER;
                 <li class="text-sm">
                   <div class="flex">
                     <span class="pr-2">Stack:</span>
-                    <span class="font-virgil text-sm pr-2">
+                    <span class="text-xs pr-2">
                       {role.frontmatter.tech &&
-                        role.frontmatter.tech.length > 0 && (
-                          <RoleTags tags={role.frontmatter.tech} />
-                        )}
+                        role.frontmatter.tech.length > 0 &&
+                        role.frontmatter.tech.map((tag: string) => (
+                          <div class="inline-block mr-3">{tag}</div>
+                        ))}
                     </span>
+                  </div>
+                </li>
+                <li class="text-sm">
+                  <div class="flex">
+                    <span class="pr-2">Dates:</span>
+                    <span class="text-sm pr-2">{role.frontmatter.dates}</span>
                   </div>
                 </li>
               </ul>
